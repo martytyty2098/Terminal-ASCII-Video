@@ -8,7 +8,7 @@ This program is built on pure C++ with the help of OpenCV library.
 <img width="600" alt="Screenshot_1" src="https://user-images.githubusercontent.com/108870368/232514678-c9d7df83-4f79-429a-bdc3-889626971b04.png">
 
 - Follow displayed instructions
-- You can also try this program with videos inside of `TestVideos.zip` **(Bad Apple there)**
+- You can also try this program with videos inside of `TestVideos.zip`
 
 **`COOL THINGS`**
 - The console window is fully resizable during real time video playback, but note that larger window size can result in a decrease in FPS, because more characters need to be rendered.
