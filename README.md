@@ -3,12 +3,12 @@
 The C++ program that takes a video file and plays it in your terminal with grayscale ASCII characters\
 This program is built on pure C++ with the help of OpenCV library.
 # Usage
-- Download `executable.zip` from [releases](https://github.com/martytyty2098/Treminal-ASCII-Video/releases)
+- Download `executable.zip` from [`releases`](https://github.com/martytyty2098/Treminal-ASCII-Video/releases)
 - Extract all the files into the same folder and run the executable like this:
 <img width="600" alt="Screenshot_1" src="https://user-images.githubusercontent.com/108870368/232514678-c9d7df83-4f79-429a-bdc3-889626971b04.png">
 
 - Follow displayed instructions
-- You can also try this program with videos inside of `TestVideos.zip`
+- You can also try this program with videos inside of [`TestVideos.zip`](https://github.com/martytyty2098/Treminal-ASCII-Video/blob/main/TestVideos.zip)
 
 **`COOL THINGS`**
 - The console window is fully resizable during real time video playback, but note that larger window size can result in a decrease in FPS, because more characters need to be rendered.
