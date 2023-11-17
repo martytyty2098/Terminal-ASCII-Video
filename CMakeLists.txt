@@ -9,7 +9,7 @@ endif()
 set(PROJECT_NAME ASCII_VIDEO)
 project(${PROJECT_NAME})
 set(CMAKE_CXX_STANDARD 14)
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # to prevent this: https://stackoverflow.com/questions/7013309/visual-studio-debugger-error-unable-to-start-program-specified-file-cannot-be-f
 set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
