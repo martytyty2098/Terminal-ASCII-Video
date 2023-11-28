@@ -17,7 +17,7 @@ Right now only works on windows, but linux support will be added in the future
 # How to build
 If you have CMake, insert this in your terminal:
 ```
-git clone https://github.com/martytyty2098/Treminal-ASCII-Video.git && cd Treminal-ASCII-Video && mkdir build && cd build && cmake ..
+git clone https://github.com/martytyty2098/Terminal-ASCII-Video.git && cd Treminal-ASCII-Video && mkdir build && cd build && cmake ..
 ```
 
 # Known issues
