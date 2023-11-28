@@ -1,38 +1,19 @@
 #pragma once
 #ifdef _WIN32
 
-#include <chrono>
-#include "platform_specific.h"
+#include "utils.h"
 
 HANDLE OutputHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 
-void safe::LoadImageToBuffer(cv::Mat& SourceImage, safe::CHAR_ABSTRACT* DestBuffer, int WinWidth, int WinHeight)
+void specific::LoadCharInfo(common::CHAR_ABSTRACT& charOut, common::RGB color)
 {
-    if (WinWidth < 1 || WinHeight < 1) return;
-
-    cv::resize(SourceImage, SourceImage, cv::Size(WinWidth, WinHeight), 0.0, 0.0, cv::INTER_NEAREST);
-
-    for (int y = 0; y < WinHeight; ++y)
-    {
-        const unsigned char* const CurrentRow = SourceImage.ptr<unsigned char>(y);
-        for (int x = 0; x < WinWidth; ++x)
-        {
-            const unsigned char* const CurrentPix = CurrentRow + 3 * x;
-            
-            //std::cout << "R: " << r << "\tG: " << g << "\tB: " << b << "\n";
-
-            unsigned int combined_RGB = combineRGB(CurrentPix[2], CurrentPix[1], CurrentPix[0]);
-            float CurrentBrightness = safe::brightnessLookup[combined_RGB];
-
-            safe::CHAR_ABSTRACT& CurrentChar = DestBuffer[WinWidth * y + x];
-            CurrentChar.Char.AsciiChar = safe::chars[int(safe::CharsAmount * CurrentBrightness)];
-            CurrentChar.Attributes = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
-        }
-    }
+    float brightness = common::getBrightness(color);
+    charOut.Char.AsciiChar = common::brightnessToChar(brightness);
+    charOut.Attributes = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
 }
 
 // Console window size in characters
-void safe::GetWindowSize(int& width_out, int& height_out)
+void specific::GetWindowSize(int& width_out, int& height_out)
 {
     CONSOLE_SCREEN_BUFFER_INFO OutputBufferInfo = {};
     GetConsoleScreenBufferInfo(OutputHandle, &OutputBufferInfo);
@@ -40,13 +21,14 @@ void safe::GetWindowSize(int& width_out, int& height_out)
     height_out = OutputBufferInfo.srWindow.Bottom - OutputBufferInfo.srWindow.Top + 1;
 }
 
-void safe::RenderBuffer(safe::CHAR_ABSTRACT* buffer, short win_width, short win_height)
+void specific::RenderBuffer(common::CHAR_ABSTRACT* buffer, short win_width, short win_height)
 {
     SMALL_RECT writeArea = { 0, 0, win_width - 1, win_height - 1 };
     WriteConsoleOutputA(OutputHandle, buffer, { win_width, win_height }, { 0, 0 }, &writeArea);
+    SetConsoleCursorPosition(OutputHandle, { 0, 0 });
 }
 
-void safe::SetConsoleTextSize(int new_width, int new_height)
+void specific::SetConsoleTextSize(int new_width, int new_height)
 {
     CONSOLE_FONT_INFOEX cfi = {};
     cfi.cbSize = sizeof(cfi);
@@ -59,23 +41,32 @@ void safe::SetConsoleTextSize(int new_width, int new_height)
     SetCurrentConsoleFontEx(OutputHandle, FALSE, &cfi);
 }
 
-void safe::SetConsoleResolution(char resolution)
+void specific::SetConsoleResolution(char resolution)
 {
     switch (resolution)
     {
     case '1':
-        safe::SetConsoleTextSize(2, 5);
+        specific::SetConsoleTextSize(2, 5);
         break;
     case '2':
-        safe::SetConsoleTextSize(4, 8);
+        specific::SetConsoleTextSize(4, 8);
         break;
     case '3':
-        safe::SetConsoleTextSize(6, 12);
+        specific::SetConsoleTextSize(6, 12);
         break;
     case '4':
-        safe::SetConsoleTextSize(8, 16);
+        specific::SetConsoleTextSize(8, 16);
         break;
     }
+}
+
+void specific::ClearScreen()
+{
+    DWORD charsWritten;
+    int win_width, win_height;
+    specific::GetWindowSize(win_width, win_height);
+    FillConsoleOutputCharacterA(OutputHandle, (TCHAR)' ', win_width * win_height, { 0, 0 }, &charsWritten);
+    SetConsoleCursorPosition(OutputHandle, { 0, 0 });
 }
 
 #endif
