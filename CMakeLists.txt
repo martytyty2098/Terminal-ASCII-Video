@@ -9,7 +9,6 @@ endif()
 set(PROJECT_NAME ASCII_VIDEO)
 project(${PROJECT_NAME})
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # to prevent this: https://stackoverflow.com/questions/7013309/visual-studio-debugger-error-unable-to-start-program-specified-file-cannot-be-f
 set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
@@ -17,12 +16,12 @@ set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT
 # get OpenCV on your machine
 find_package(OpenCV)
 
-file(GLOB_RECURSE SRCS
-${CMAKE_SOURCE_DIR}/source/*.c
-${CMAKE_SOURCE_DIR}/source/*.cpp
-${CMAKE_SOURCE_DIR}/source/*.cc
-${CMAKE_SOURCE_DIR}/source/*.h
-${CMAKE_SOURCE_DIR}/source/*.hpp
+file(GLOB_RECURSE SRCS CONFIGURE_DEPENDS
+"${CMAKE_SOURCE_DIR}/source/*.h"
+"${CMAKE_SOURCE_DIR}/source/*.cpp"
+"${CMAKE_SOURCE_DIR}/source/*.hpp"
+"${CMAKE_SOURCE_DIR}/source/*.cc"
+"${CMAKE_SOURCE_DIR}/source/*.c"
 )
 
 if (OpenCV_FOUND)
