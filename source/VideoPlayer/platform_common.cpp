@@ -3,7 +3,7 @@
 std::string common::disposable::askVideoPath()
 {
     std::cout
-        << "Insert the path of your video, path can be relative or full\n\n"
+        << "\nInsert the path of your video, path can be relative or full\n\n"
         << "Example :\nC:\\folder_name\\some_other_folder\\videofile.mp4\n\n"
         << "(You can resize the console window as you wish, even while the video is playing)\n\n";
 
@@ -14,7 +14,7 @@ std::string common::disposable::askVideoPath()
 
     // remove all spaces at the beginning
     int space_amount = 0;
-    for (; space_amount < video_path.length() && video_path[space_amount] == ' '; ++space_amount);
+    for (; space_amount < video_path.length() && video_path.at(space_amount) == ' '; ++space_amount);
     video_path.erase(0, space_amount);
 
     return video_path;
@@ -31,28 +31,24 @@ char common::disposable::askResolution()
         << "4 - Low resolution\n\n"
         << "Enter the number of desired resolution : ";
 
-    char resolution = 0;
-    std::cin >> resolution;
-    std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
+    std::string resolution;
+    std::getline(std::cin, resolution, '\n');
 
-    for (bool passed = false; !passed; passed = true)
-    {
-        switch (resolution) {
-        case '0':
-        case '1':
-        case '2':
-        case '3':
-        case '4':
-            break;
-        default:
-            std::cout << "Bad input, must ba a number from 0 to 4, try again : ";
-            std::cin >> resolution;
-            std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
-            passed = false;
-        }
+    switch (resolution[0]) {
+    case '0':
+    case '1':
+    case '2':
+    case '3':
+    case '4':
+        break;
+    default:
+        resolution[0] = '1';
     }
 
-    return resolution;
+    if (resolution.length() > 2)
+        resolution[0] = '1';
+
+    return resolution[0];
 }
 
 float common::getBrightness(common::RGB color)
@@ -84,6 +80,29 @@ void common::LoadImageToBuffer(cv::Mat& SourceImage, common::CHAR_ABSTRACT* Dest
             const unsigned char* const CurrentPix = CurrentRow + 3 * x;
             specific::LoadCharInfo(DestBuffer[WinWidth * y + x], { CurrentPix[2], CurrentPix[1], CurrentPix[0] });
         }
+    }
+}
+
+void common::SetConsoleResolution(char resolution)
+{
+    switch (resolution)
+    {
+    case '0':
+        break;
+    case '1':
+        specific::SetConsoleTextSize(2, 5);
+        break;
+    case '2':
+        specific::SetConsoleTextSize(4, 8);
+        break;
+    case '3':
+        specific::SetConsoleTextSize(6, 12);
+        break;
+    case '4':
+        specific::SetConsoleTextSize(8, 16);
+        break;
+    default:
+        specific::SetConsoleTextSize(2, 5);
     }
 }
 

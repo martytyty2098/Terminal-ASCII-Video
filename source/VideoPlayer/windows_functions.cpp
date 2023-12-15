@@ -37,36 +37,8 @@ void specific::SetConsoleTextSize(int new_width, int new_height)
     cfi.dwFontSize.Y = new_height;
     cfi.FontFamily = FF_DONTCARE;
     cfi.FontWeight = FW_NORMAL;
-    wcscpy_s(cfi.FaceName, new_width < 6 ? L"Terminal" : L"Consolas");
+    wcscpy_s(cfi.FaceName, new_width == 4 ? L"Terminal" : L"Consolas");
     SetCurrentConsoleFontEx(OutputHandle, FALSE, &cfi);
-}
-
-void specific::SetConsoleResolution(char resolution)
-{
-    switch (resolution)
-    {
-    case '1':
-        specific::SetConsoleTextSize(2, 5);
-        break;
-    case '2':
-        specific::SetConsoleTextSize(4, 8);
-        break;
-    case '3':
-        specific::SetConsoleTextSize(6, 12);
-        break;
-    case '4':
-        specific::SetConsoleTextSize(8, 16);
-        break;
-    }
-}
-
-void specific::ClearScreen()
-{
-    DWORD charsWritten;
-    int win_width, win_height;
-    specific::GetWindowSize(win_width, win_height);
-    FillConsoleOutputCharacterA(OutputHandle, (TCHAR)' ', win_width * win_height, { 0, 0 }, &charsWritten);
-    SetConsoleCursorPosition(OutputHandle, { 0, 0 });
 }
 
 #endif
