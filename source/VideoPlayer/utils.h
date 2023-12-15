@@ -42,6 +42,9 @@ namespace common
 
     // a blocking function that will not stop until it finishes playing the video
     void StartPlayback(cv::VideoCapture& video);
+
+    // number from '0' to '4'
+    void SetConsoleResolution(char resolution);
 }
 
 // platform specific
@@ -56,9 +59,4 @@ namespace specific
     void RenderBuffer(common::CHAR_ABSTRACT* buffer, short win_width, short win_height);
 
     void SetConsoleTextSize(int new_width, int new_height);
-
-    // number from '0' to '4'
-    void SetConsoleResolution(char resolution);
-
-    void ClearScreen();
 }
