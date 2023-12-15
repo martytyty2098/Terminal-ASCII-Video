@@ -10,7 +10,7 @@ _Right now works under windows only._
   <img width="300" alt="Screenshot_4" src="https://github.com/martytyty2098/Terminal-ASCII-Video/assets/108870368/b041c1b0-d069-4309-8a30-3e2225e44a84">
 
 - **`IMPORTANT`** Ensure that `ASCII_VIDEO.exe` and `VIDEO_SEEKER.exe` are in the same directory/folder because `VIDEO_SEEKER.exe` invokes `ASCII_VIDEO.exe`
-- Follow displayed instructions
+- Select any video on your machine
 
 #### By the way
 - The console window is fully resizable during real time video playback.
